@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>CS1101 Index</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <!-- Bootstrap core CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link href="/style.css" rel="stylesheet" />
+    <script src="data.js"></script>
+    <script src="autocompletion.js"></script>
+  </head>
+
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+      <div class="container">
+        <a class="navbar-brand" href="/">
+          <h3 style="display: inline; padding-left: 3%">CS1101 Index</h3>
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarResponsive"
+          aria-controls="navbarResponsive"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="nav navbar-nav"></ul>
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/about.html">About </a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="/contributers.html" target="_blank">
+                Contributers
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="col-md-6 offset-md-2 mt-5 pt-3">
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search ......"
+          aria-label="Recipient's username"
+          id="search_input"
+        />
+        <div class="input-group-append" id="search_btn">
+          <span class="input-group-text"
+            ><i class="fa fa-search">search</i></span
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Card Start -->
+    <div class="card col-md-6 offset-md-2 mt-5 pt-3">
+      <div class="row">
+        <div class="px-3">
+          <div class="card-block px-6">
+            <h4 class="card-title h2" id="box_title"></h4>
+            <p class="card-text h4" id="box_definition"></p>
+            <br />
+            <div class="mt-auto">
+              <small id="box_reference"></small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      autocomplete(
+        document.getElementById("search_input"),
+        cs_index_titles_array
+      );
+
+      window.onload = function () {
+        const searchButton = document.getElementById("search_btn");
+
+        searchButton.addEventListener("click", function (e) {
+          var term = document.getElementById("search_input");
+          term = term.value;
+
+          var title = document.getElementById("box_title");
+          var def = document.getElementById("box_definition");
+          var ref = document.getElementById("box_reference");
+
+          var answer;
+          cs_index_titles_array.map((e, i) => {
+            if (term === e) {
+              return (answer = cs_index[i]);
+            }
+          });
+
+          console.log(answer);
+
+          if (!answer) {
+            title.innerText = term;
+            def.innerText =
+              "sorry, the phrase you are looking for is not in our index.";
+            ref.innerText = "";
+            return;
+          }
+
+          title.innerText = answer.title;
+          def.innerText = answer.definition;
+          ref.innerText = answer.reference;
+        });
+
+        document.getElementById("search_input").addEventListener("keyup", function (event) {
+          // Number 13 is the "Enter" key on the keyboard
+          if (event.keyCode === 13) {
+            // Cancel the default action, if needed
+            event.preventDefault();
+            // Trigger the button element with a click
+            document.getElementById("search_btn").click();
+          }
+        });
+      };
+    </script>
+  </body>
+</html>
