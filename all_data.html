@@ -66,9 +66,8 @@
     <script>
       window.onload = function () {
         cs_index.sort(function (a, b) {
-            return a.text > b.text
+            return a.title > b.title
         });
-        console.log(cs_index)
         var table = document.getElementById("cs_table");
         cs_index.map((e, i) => {
           var row = table.insertRow(i+1);
