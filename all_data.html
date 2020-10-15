@@ -68,8 +68,8 @@
         cs_index.sort(function (a, b) {
           const x = a.title;
           const y = b.title;
-          if (x > y) return -1;
-          if ( x < y) return +1;
+          if (x > y) return +1;
+          if ( x < y) return -1;
           return 0;
         });
         var table = document.getElementById("cs_table");
